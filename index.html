@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management Platform - Technical Documentation</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --accent-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background-color: var(--background);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.54cm;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .toc {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            column-count: 2;
+            column-gap: 2rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+            break-inside: avoid;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.25rem 0;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: var(--primary-color);
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .section-number {
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1rem;
+        }
+
+        .section h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .subsection {
+            margin: 2rem 0;
+        }
+
+        .subsection h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .subsection h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 1.5rem 0 0.75rem 0;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .architecture-diagram, .erd-diagram {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid var(--border);
+            margin: 2rem 0;
+        }
+        
+        .architecture-diagram img, .erd-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .flow-box {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--surface);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fde68a 100%);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-active { background: var(--accent-color); }
+        .status-warning { background: var(--warning-color); }
+        .status-error { background: var(--danger-color); }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .security-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .header {
+                margin: -1rem -1rem 2rem -1rem;
+                padding: 2rem 1rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .toc ul {
+                column-count: 1;
+            }
+            .flow-diagram {
+                flex-direction: column;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Employee Management Platform</h1>
+            <div class="subtitle">Comprehensive Technical Documentation & Architecture Overview</div>
+        </div>
+
+        <div class="toc">
+            <h2>📋 Table of Contents</h2>
+            <ul>
+                <li><a href="#overview">1. Executive Overview</a></li>
+                <li><a href="#architecture">2. System Architecture</a></li>
+                <li><a href="#backend">3. Backend Implementation</a></li>
+                <li><a href="#middleware">4. Middleware Layer</a></li>
+                <li><a href="#frontend">5. Frontend Application</a></li>
+                <li><a href="#security">6. Security Framework</a></li>
+                <li><a href="#deployment">7. Deployment Strategy</a></li>
+            </ul>
+        </div>
+
+        <section id="overview" class="section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <h2>Executive Overview</h2>
+            </div>
+            
+            <div class="card">
+                <p>The Employee Management Platform represents a <span class="highlight">full-stack enterprise solution</span> engineered for scalable workforce administration and resource optimization for TechInnovators Inc. The system integrates a modern cloud-native architecture with enterprise-grade Oracle backend services to deliver comprehensive employee authentication, equipment lifecycle management, and intelligent booking workflows. This solution directly addresses the challenges of inefficient equipment tracking and resource allocation, aiming to reduce project delays and operational costs.</p>
+            </div>
+
+            <div class="subsection">
+                <h3>🎯 Core Capabilities</h3>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <span class="metric-value">3-Tier</span>
+                        <div class="metric-label">System Architecture</div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">RESTful</span>
+                        <div class="metric-label">API Design</div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">Enterprise</span>
+                        <div class="metric-label">Security Grade</div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">TLS 1.3</span>
+                        <div class="metric-label">End-to-End Encryption</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🏗️ Technology Stack</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Layer</th>
+                                <th>Technology</th>
+                                <th>Primary Function</th>
+                                <th>Hosting Environment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="status-indicator status-active"></span>Backend (Data & Logic Tier)</td>
+                                <td>Oracle APEX + ORDS</td>
+                                <td>Handles core database operations, enforces business logic through PL/SQL, and exposes data via secure REST APIs.</td>
+                                <td>Oracle APEX Cloud Service</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-indicator status-active"></span>Middleware (Integration Tier)</td>
+                                <td>Python Flask</td>
+                                <td>Serves as an intermediary for API translation, enhances security with JWT, manages CORS, and prepares for future AI/ML integrations.</td>
+                                <td>Render.com Platform</td>
+                            </tr>
+                            <tr>
+                                <td><span class="status-indicator status-active"></span>Frontend (Presentation Tier)</td>
+                                <td>React (via Lovable scaffold)</td>
+                                <td>Delivers a modern, responsive, and intuitive user interface for both administrative staff and employees.</td>
+                                <td>Lovable Deployment Pipeline</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <h2>System Architecture</h2>
+            </div>
+
+            <div class="architecture-diagram">
+                <h3>High-Level System Architecture</h3>
+                <p>The diagram below illustrates the three-tier architecture, showing the separation between the frontend, middleware, and backend components. This modular design enhances scalability, maintainability, and security.</p>
+                <img src="system-architecture-diagram.png" alt="A diagram showing the 3-tier system architecture: React Frontend communicates with Python Flask Middleware, which in turn communicates with the Oracle APEX/ORDS Backend.">
+            </div>
+
+            <div class="subsection">
+                <h3>🔧 Architectural Principles</h3>
+                <div class="card">
+                    <h4>Separation of Concerns</h4>
+                    <p>Each architectural tier has a distinct and well-defined responsibility. The Oracle backend is the authoritative source for data and business logic. The Flask middleware acts as a secure gateway and orchestrator. The React frontend is solely focused on delivering an optimal user experience. This separation simplifies development, testing, and maintenance.</p>
+                    
+                    <h4>Scalability and Performance</h4>
+                    <p>The architecture is designed for growth. The stateless Flask middleware can be scaled horizontally to handle increased API traffic without needing to alter the Oracle database licensing. Caching strategies can be implemented within the middleware to reduce load on the database for frequently requested, non-sensitive data.</p>
+                    
+                    <h4>Flexibility and Future-Proofing</h4>
+                    <p>The middleware layer decouples the frontend from the backend. This means the user interface can be completely redesigned or migrated to a new technology (e.g., a mobile app) with minimal impact on the backend. Similarly, backend processes can be optimized without forcing changes on the frontend.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="backend" class="section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <h2>Backend Implementation (Oracle APEX/ORDS)</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>📊 Database Schema Design</h3>
+                <p>The database schema is designed using normalization principles (3NF) to ensure data integrity and minimize redundancy. It employs primary keys, foreign key constraints, check constraints, and indexes to enforce business rules and optimize query performance.</p>
+
+                <div class="erd-diagram">
+                    <h3>Entity-Relationship Diagram (ERD)</h3>
+                     <img src="database-schema-ERD.png" alt="An Entity-Relationship Diagram showing the tables EMPLOYEE, EQUIPMENT, and BOOKINGS, with relationships indicating how they are linked via foreign keys.">
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Table</th>
+                                <th>Primary Key</th>
+                                <th>Key Attributes & Data Types</th>
+                                <th>Business Rules & Constraints</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>EMPLOYEE</strong></td>
+                                <td>EMPLOYEE_CODE (VARCHAR2)</td>
+                                <td>PASSWORD_HASH (VARCHAR2), ROLE (VARCHAR2), STATUS (VARCHAR2)</td>
+                                <td>EMPLOYEE_CODE is unique. ROLE must be 'Admin' or 'Employee'. STATUS must be 'Active' or 'Inactive'.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>EQUIPMENT</strong></td>
+                                <td>EQUIPMENT_ID (NUMBER)</td>
+                                <td>NAME (VARCHAR2), DESCRIPTION (VARCHAR2), AVAILABILITY_STATUS (VARCHAR2), QUANTITY (NUMBER)</td>
+                                <td>AVAILABILITY_STATUS must be 'Available', 'Checked Out', or 'Under Maintenance'. QUANTITY must be >= 0.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>BOOKINGS</strong></td>
+                                <td>BOOKING_ID (NUMBER)</td>
+                                <td>EMPLOYEE_CODE (FK), EQUIPMENT_ID (FK), CHECKOUT_DATE (DATE), RETURN_DATE (DATE), STATUS (VARCHAR2)</td>
+                                <td>Foreign keys enforce referential integrity. CHECKOUT_DATE cannot be in the future. STATUS must be 'Active' or 'Returned'.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🚀 ORDS REST API Endpoints</h3>
+                <p>RESTful services are developed using the APEX SQL Workshop and follow OpenAPI 3.0 standards. Each endpoint is secured and provides structured JSON responses for predictable integration.</p>
+
+                <div class="card">
+                    <h4>Authentication Services</h4>
+                    <div class="code-block">POST /ords/workspace/employee/login
+- Description: Authenticates a user based on employee code and password.
+- Request Body: { "EMPLOYEE_CODE": "...", "PASSWORD": "..." }
+- Success Response: { "status": "success", "role": "Admin", ... }
+- Error Response: { "status": "error", "message": "Invalid credentials" }</div>
+                </div>
+
+                <div class="card">
+                    <h4>Equipment Management (Admin Only)</h4>
+                    <div class="code-block">GET /ords/workspace/equipment/
+- Description: Retrieves a list of all equipment.
+
+GET /ords/workspace/equipment/:id
+- Description: Retrieves details for a single piece of equipment.
+
+POST /ords/workspace/equipment/
+- Description: Creates a new equipment record.
+
+PUT /ords/workspace/equipment/:id
+- Description: Updates an existing equipment record.</div>
+                </div>
+
+                <div class="card">
+                    <h4>Booking Operations</h4>
+                    <div class="code-block">POST /ords/workspace/bookings/
+- Description: Allows an admin to create a new booking to check out equipment for an employee.
+
+GET /ords/workspace/bookings?employee_code=X
+- Description: Allows an employee to view their current and past bookings.
+
+PUT /ords/workspace/bookings/:id/return
+- Description: Allows an employee to check-in/return equipment.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="middleware" class="section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <h2>Middleware Layer (Python Flask)</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>🎭 Strategic Purpose</h3>
+                <div class="card">
+                    <p>The Flask middleware acts as a crucial <span class="highlight">API gateway and security layer</span>. It abstracts the backend complexity from the frontend, providing a simplified and secure interface for the client application. Its key roles are:</p>
+                    
+                    <div style="margin-top: 1rem;">
+                        <div class="security-badge">CORS Policy Enforcement</div>
+                        <div class="security-badge">JWT Generation & Validation</div>
+                        <div class="security-badge">Rate Limiting & Throttling</div>
+                        <div class="security-badge">Centralized Logging</div>
+                        <div class="security-badge">API Facade & Versioning</div>
+                        <div class="security-badge">Platform for Future AI/ML</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>🔧 Implementation Architecture</h3>
+                <div class="card">
+                    <h4>Core Logic Example: Enhanced Login</h4>
+                    <div class="code-block">from flask import Flask, request, jsonify
+import requests
+import jwt
+from functools import wraps
+from datetime import datetime, timedelta
+
+app = Flask(__name__)
+# In a real app, this should come from a secure config
+app.config['JWT_SECRET'] = 'your-super-secret-key' 
+APEX_BASE_URL = "https://apex.oracle.com/pls/apex/workspace"
+
+@app.route('/api/v1/login', methods=['POST'])
+def enhanced_login():
+    """Validates credentials against the ORDS backend and issues a JWT token."""
+    auth_data = request.get_json()
+    
+    # 1. Forward authentication request to the secure ORDS endpoint
+    oracle_response = requests.post(
+        f"{APEX_BASE_URL}/employee/login", 
+        json=auth_data,
+        timeout=10 # Set a timeout for the external request
+    )
+    
+    if oracle_response.status_code == 200 and oracle_response.json().get('status') == 'success':
+        # 2. If successful, generate a stateless JWT token
+        payload = {
+            'employee_code': auth_data['EMPLOYEE_CODE'],
+            'role': oracle_response.json()['role'],
+            'exp': datetime.utcnow() + timedelta(hours=8) # Set token expiration
+        }
+        token = jwt.encode(payload, app.config['JWT_SECRET'], algorithm='HS256')
+        
+        # 3. Return the token and user role to the frontend
+        return jsonify({
+            'success': True,
+            'token': token,
+            'role': oracle_response.json()['role']
+        })
+    
+    # 4. If authentication fails, return a standardized error message
+    return jsonify({'success': False, 'message': 'Invalid credentials or backend error'}), 401
+</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="frontend" class="section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <h2>Frontend Application (React)</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>🎨 User Interface Components</h3>
+                
+                <div class="card">
+                    <h4>Authentication Module</h4>
+                    <p>Provides a secure login form for employees and admins. It handles form validation, displays clear error messages, and upon successful login, securely stores the JWT token for subsequent API requests.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Admin Dashboard</h4>
+                    <p>A comprehensive interface for administrators to manage the entire equipment inventory. Features include adding new equipment, updating quantities, viewing booking history, and generating usage reports. It utilizes a responsive table with search and filtering capabilities.</p>
+                </div>
+
+                <div class="card">
+                    <h4>Employee Dashboard</h4>
+                    <p>A streamlined interface for employees to view their assigned equipment (both current and past). The key feature is the equipment return process, where an employee can input a Booking ID and scan a QR code to check-in an item.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="security" class="section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <h2>Security Framework</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>🛡️ Multi-Layer Security Implementation</h3>
+                
+                <div class="card">
+                    <h4>Authentication & Authorization</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li><strong>Password Security:</strong> Passwords are never stored in plain text. We use the <code>DBMS_CRYPTO</code> package in Oracle for SHA-256 hashing with a unique salt per user.</li>
+                        <li><strong>Session Management:</strong> Stateless JWT tokens are used for session management, with short-lived expiration policies (e.g., 8 hours) to minimize risk.</li>
+                        <li><strong>Role-Based Access Control (RBAC):</strong> The Flask middleware validates the role claim within the JWT on every protected API call, ensuring that only users with the 'Admin' role can access management functions.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>Data Protection</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li><strong>Encryption in Transit:</strong> TLS 1.3 is enforced for all communication between the client, middleware, and backend, ensuring data is encrypted over the network.</li>
+                        <li><strong>Input Sanitization:</strong> All user input is sanitized at both the middleware and backend layers to prevent common vulnerabilities like SQL Injection and Cross-Site Scripting (XSS).</li>
+                        <li><strong>Audit Logging:</strong> Critical actions such as equipment creation, booking, and return are logged with user identifiers and timestamps for accountability and compliance.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="deployment" class="section">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <h2>Deployment Strategy</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>🌐 Multi-Environment Architecture</h3>
+                <p>A multi-environment strategy (Development, Staging, Production) is employed to ensure system stability and reliability. Each component is deployed to a platform best suited for its technology.</p>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Platform</th>
+                                <th>Deployment Method</th>
+                                <th>Scaling Strategy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Oracle APEX/ORDS</td>
+                                <td>Oracle APEX Cloud Service</td>
+                                <td>Managed service with APEX application import/export.</td>
+                                <td>Vertically scaled and managed by Oracle Cloud Infrastructure.</td>
+                            </tr>
+                            <tr>
+                                <td>Flask Middleware</td>
+                                <td>Render.com</td>
+                                <td>Containerized using Docker and deployed via Git push.</td>
+                                <td>Horizontal auto-scaling based on CPU/memory usage.</td>
+                            </tr>
+                            <tr>
+                                <td>React Frontend</td>
+                                <td>Lovable Platform</td>
+                                <td>Automated CI/CD pipeline triggered by Git commits.</td>
+                                <td>Global CDN distribution with static asset caching.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <footer style="margin-top: 4rem; padding: 2rem; background: var(--surface); border-radius: 12px; text-align: center; color: var(--text-secondary);">
+            <p><strong>Document Classification:</strong> Internal Technical Documentation</p>
+            <p><strong>Last Updated:</strong> September 2025 | <strong>Version:</strong> 1.0</p>
+        </footer>
+    </div>
+</body>
+</html>
+
